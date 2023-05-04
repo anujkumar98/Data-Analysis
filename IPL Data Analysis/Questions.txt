@@ -1,0 +1,17 @@
+1. City that hosted most no of matches? ->
+	 Replace the NA columns.
+		Duplicate the venue name 
+		Split by first space
+		Replace na with first name 
+		Delete the new created temp tables
+		Eg : NA in city field in Dubai Internation Stadium column is replaced by Dubai
+	
+2. Day or Week of Day with most matches?
+3. Most player of the match?
+4. Venue with most matches?
+5. Does winning the toss have an advantage? (Toss winner vs Winner colums)
+6. Toss descision vs venue
+7. Who has won the most eliminator?
+8. Result margin - average, highest and least for both categories.
+9. Most no of matches for umpire?
+10. Matches with D/L law vs normal matches.
