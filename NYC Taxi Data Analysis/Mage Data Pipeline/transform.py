@@ -66,10 +66,19 @@ def transform(df, *args, **kwargs):
     rate_code_dim['rate_code_id'] = rate_code_dim.index
     rate_code_dim['rate_code_name'] = rate_code_dim['RatecodeID'].map(rate_code_type)
     rate_code_dim = rate_code_dim[['rate_code_id','RatecodeID','rate_code_name']]
-    pickup_location_dim = df[['pickup_longitude', 'pickup_latitude']].reset_index(drop=True)
+    zone_lookup=pd.read_csv("https://storage.googleapis.com/nyc-taxi-data-covid/data/taxi_zone_lookup.csv")
+    pickup_location_dim=df[['PULocationID']].reset_index(drop=True)
     pickup_location_dim['pickup_location_id'] = pickup_location_dim.index
-    pickup_location_dim = pickup_location_dim[['pickup_location_id','pickup_latitude','pickup_longitude']] 
-
+    pickup_location_dim=pickup_location_dim.merge(zone_lookup,left_on='PULocationID',right_on='LocationID')
+    pickup_location_dim['pickup_borough']=pickup_location_dim['Borough']
+    pickup_location_dim['pickup_zone']=pickup_location_dim['Zone']
+    pickup_location_dim=pickup_location_dim[['pickup_location_id','pickup_borough','pickup_zone']]
+    dropoff_location_dim=df[['DOLocationID']].reset_index(drop=True)
+    dropoff_location_dim['dropoff_location_id'] = dropoff_location_dim.index
+    dropoff_location_dim=dropoff_location_dim.merge(zone_lookup,left_on='DOLocationID',right_on='LocationID')
+    dropoff_location_dim['dropoff_borough']=dropoff_location_dim['Borough']
+    dropoff_location_dim['dropoff_zone']=dropoff_location_dim['Zone']
+    dropoff_location_dim=dropoff_location_dim[['dropoff_location_id','dropoff_borough','dropoff_zone']]
     dropoff_location_dim = df[['dropoff_longitude', 'dropoff_latitude']].reset_index(drop=True)
     dropoff_location_dim['dropoff_location_id'] = dropoff_location_dim.index
     dropoff_location_dim = dropoff_location_dim[['dropoff_location_id','dropoff_latitude','dropoff_longitude']]
