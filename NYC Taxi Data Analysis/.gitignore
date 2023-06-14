@@ -1,1 +1,4 @@
 env
+data/20*
+data/*docx
+*.json
